@@ -1,22 +1,35 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8289afb2-6e2c-457c-8a53-275f4c48abb9" name="Default Changelist" comment="" />
+    <list default="true" id="8289afb2-6e2c-457c-8a53-275f4c48abb9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/cube.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/cube.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/game.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/game.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/testObj.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/testObj.cs.meta" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Editor/ToDo List/ToDo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/testObj.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/cube.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/game.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CodeTaskLine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/119DEDB1-AE4D-4D7F-87BB-68CFAF186648/1c/a4a5a110/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaskLine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TestingScripts/cubeManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/119DEDB1-AE4D-4D7F-87BB-68CFAF186648/cd/ba6e563b/HostView.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -24,9 +37,19 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/Editor/todoEditor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/cube.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/game.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/testObj.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/game.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TaskLine.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CodeTaskLine.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TestingScripts/cubeManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/.idea.todoist/.idea/vcs.xml" />
       </list>
     </option>
   </component>
@@ -36,6 +59,7 @@
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -76,6 +100,8 @@
       <option name="presentableId" value="Default" />
       <updated>1572162910363</updated>
       <workItem from="1572162913919" duration="7836000" />
+      <workItem from="1572200486321" duration="600000" />
+      <workItem from="1572289486963" duration="3400000" />
     </task>
     <servers />
   </component>
@@ -84,6 +110,19 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
   </component>
@@ -124,6 +163,8 @@
     <state width="1877" height="176" key="GridCell.Tab.3.right/1920.1080" />
     <state x="484" y="261" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" />
     <state x="484" y="261" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/1920.1080" />
+    <state x="616" y="243" key="run.anything.popup" />
+    <state x="616" y="243" key="run.anything.popup/1920.1080" />
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" />
     <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/1920.1080" />
   </component>
@@ -134,45 +175,6 @@
           <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs</url>
-          <line>85</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" initialLine="86">
-            <startOffsets>
-              <option value="3039" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3080" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs</url>
-          <line>99</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" initialLine="100">
-            <startOffsets>
-              <option value="3643" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3662" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs</url>
-          <line>104</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" initialLine="105">
-            <startOffsets>
-              <option value="3806" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3851" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

@@ -7,28 +7,25 @@ using UnityEngine;
 
 public class ToDoIstEditor : EditorWindow
 {
+    private Dictionary<string,TaskLine> m_tasks = new Dictionary<string, TaskLine>();
+
     //TODO: still update as Renderer
     
-    // Add menu named "My Window" to the Window menu
     [MenuItem("Window/ToDoIst", false, 1)]
     static void Init()
     {
-        // Get existing open window or if none, make a new one:
-        ToDoIstEditor window = (ToDoIstEditor)EditorWindow.GetWindow(typeof(ToDoIstEditor));
+        ToDoIstEditor window = (ToDoIstEditor)GetWindow(typeof(ToDoIstEditor));
         window.Show();
     }
 
     void OnGUI()
     {
-        //Get All directories in assets folder
+        //Get Assets paths
         string[] assetPaths = AssetDatabase.GetAllAssetPaths();
-        
-        //List of scripts
-        //MonoScripts representing asset script
+
+        //Handle correct scripts
         List<MonoScript> scripts = new List<MonoScript>();
         Dictionary<string,string> pathScript = new Dictionary<string, string>();
-
-        //GetAll Scripts in AssetsFolder
         foreach (string assetPath in assetPaths)
         {
             if (!assetPath.Contains("/Editor/"))
@@ -43,17 +40,21 @@ public class ToDoIstEditor : EditorWindow
                 }
             }
         }
-
-        //Find Todos mark
+        
+        //Find TODOs in filtered scripts
         foreach (MonoScript script in scripts)
         {
-            string scriptText;
-            scriptText = script.text;
+            var scriptText = script.text;
+            var lineCount = 0;
 
-            int lineCount = 0;
+            bool isRenderingBox = false;
             if (scriptText.Contains("//TODO:"))
             {
-                GUILayout.Label ("In script \"" + script.name + "\"", EditorStyles.boldLabel);
+                isRenderingBox = true;
+                EditorGUILayout.BeginVertical("Box");
+                EditorGUILayout.LabelField(script.name + (pathScript[script.name].EndsWith(".js")? ".js" : ".cs"), EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(pathScript[script.name]);
+                GUILayout.Space(10);
             }
 
             // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
@@ -74,46 +75,68 @@ public class ToDoIstEditor : EditorWindow
 
                     string todo = scriptText.Substring(start, end);
                     scriptText = scriptText.Substring(start + end + 1);
+
+                    CodeTaskLine codeTaskLine = AddNewCodeTask(todo, script.name, lineCount);
                     
+                    EditorGUILayout.BeginHorizontal();
                     
-                    GUILayout.BeginHorizontal();
-                    
-                    if (GUILayout.Button (todo + " :" + lineCount.ToString (), EditorStyles.textArea)) {
+                    if (GUILayout.Button (todo + " :" + lineCount, EditorStyles.textArea)) 
+                    {
                         AssetDatabase.OpenAsset (script, lineCount);
                     }
                     if (GUILayout.Button ("X", EditorStyles.miniButton)) {
                         
-                        string tempFile = Path.GetTempFileName();
-
-                        int l_line = 0;
-                        using(var sr = new StreamReader(pathScript[script.name]))
-                        using(var sw = new StreamWriter(tempFile))
-                        {
-                            string line = String.Empty;
-
-                            while((line = sr.ReadLine()) != null)
-                            {
-                                l_line++;
-                                
-                                
-                                if(l_line != 13)
-                                    sw.WriteLine(line);
-                            }
-                        }
-
-                        File.Delete(pathScript[script.name]);
-                        File.Move(tempFile, pathScript[script.name]);
-                        AssetDatabase.Refresh();
+                      RemoveLineFromScript(pathScript[script.name],(CodeTaskLine)m_tasks[codeTaskLine.GetCodeHash()]);
                     }
-                    GUILayout.EndHorizontal();
+                    
+                    EditorGUILayout.EndHorizontal();
                 }
                 else
                 {
                     lineCount = 0;
                     scriptText = String.Empty;
                 }
-
+            }
+            
+            if(isRenderingBox){
+                EditorGUILayout.EndVertical();
             }
         }
+    }
+
+    CodeTaskLine AddNewCodeTask(string _todo, string _scriptName, int _line)
+    {
+        CodeTaskLine codeTaskLine = new CodeTaskLine(_todo,_scriptName, _line);
+        if(!m_tasks.ContainsKey(codeTaskLine.GetCodeHash()))
+        { 
+            m_tasks.Add(codeTaskLine.GetCodeHash(),codeTaskLine);
+        }
+
+        return codeTaskLine;
+    }
+    
+    void RemoveLineFromScript(string pathScript, CodeTaskLine codeTaskLine)
+    {
+        string tempFile = Path.GetTempFileName();
+
+        int l_line = 0;
+        using(var sr = new StreamReader(pathScript))
+        using(var sw = new StreamWriter(tempFile))
+        {
+            string line = String.Empty;
+
+            while((line = sr.ReadLine()) != null)
+            {
+                l_line++;
+                
+                if(l_line != codeTaskLine.Line)
+                    sw.WriteLine(line);
+            }
+        }
+
+        m_tasks.Remove(codeTaskLine.GetCodeHash());
+        File.Delete(pathScript);
+        File.Move(tempFile, pathScript);
+        AssetDatabase.Refresh();
     }
 }

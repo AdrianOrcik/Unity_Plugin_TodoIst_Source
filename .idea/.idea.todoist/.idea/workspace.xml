@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8289afb2-6e2c-457c-8a53-275f4c48abb9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.todoist/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CodeTaskLine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CodeTaskLine.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/cube.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/cube.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/game.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/game.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/testObj.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/testObj.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestingScripts/cubeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestingScripts/cubeManager.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,13 +17,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Editor/ToDo List/ToDo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CodeTaskLine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/119DEDB1-AE4D-4D7F-87BB-68CFAF186648/1c/a4a5a110/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaskLine.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TestingScripts/cubeManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/119DEDB1-AE4D-4D7F-87BB-68CFAF186648/f3/45f2f74c/EditorGUILayout.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TestingScripts/game.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/119DEDB1-AE4D-4D7F-87BB-68CFAF186648/cd/ba6e563b/HostView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Editor/ToDo List/ToDo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/47EBF6EB-E9B3-4943-B14A-F8769A0E6CAB/8d/74ecfa4a/GUIStyle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TestingScripts/cubeManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -81,10 +80,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="7924">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="17296">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="7924" />
+      <option name="pid" value="17296" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -101,7 +100,9 @@
       <updated>1572162910363</updated>
       <workItem from="1572162913919" duration="7836000" />
       <workItem from="1572200486321" duration="600000" />
-      <workItem from="1572289486963" duration="3400000" />
+      <workItem from="1572289486963" duration="4837000" />
+      <workItem from="1572366144803" duration="4677000" />
+      <workItem from="1572371079627" duration="3799000" />
     </task>
     <servers />
   </component>
@@ -129,38 +130,38 @@
   <component name="WindowStateProjectService">
     <state width="577" height="465" key="DebuggerActiveHint" />
     <state width="577" height="465" key="DebuggerActiveHint/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.0.bottom" />
-    <state width="1877" height="176" key="GridCell.Tab.0.bottom/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.0.center" />
-    <state width="1877" height="176" key="GridCell.Tab.0.center/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.0.left" />
-    <state width="1877" height="176" key="GridCell.Tab.0.left/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.0.right" />
-    <state width="1877" height="176" key="GridCell.Tab.0.right/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.1.bottom" />
-    <state width="1877" height="176" key="GridCell.Tab.1.bottom/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.1.center" />
-    <state width="1877" height="176" key="GridCell.Tab.1.center/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.1.left" />
-    <state width="1877" height="176" key="GridCell.Tab.1.left/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.1.right" />
-    <state width="1877" height="176" key="GridCell.Tab.1.right/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.2.bottom" />
-    <state width="1877" height="176" key="GridCell.Tab.2.bottom/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.2.center" />
-    <state width="1877" height="176" key="GridCell.Tab.2.center/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.2.left" />
-    <state width="1877" height="176" key="GridCell.Tab.2.left/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.2.right" />
-    <state width="1877" height="176" key="GridCell.Tab.2.right/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.3.bottom" />
-    <state width="1877" height="176" key="GridCell.Tab.3.bottom/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.3.center" />
-    <state width="1877" height="176" key="GridCell.Tab.3.center/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.3.left" />
-    <state width="1877" height="176" key="GridCell.Tab.3.left/1920.1080" />
-    <state width="1877" height="176" key="GridCell.Tab.3.right" />
-    <state width="1877" height="176" key="GridCell.Tab.3.right/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.0.bottom" />
+    <state width="1877" height="175" key="GridCell.Tab.0.bottom/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.0.center" />
+    <state width="1877" height="175" key="GridCell.Tab.0.center/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.0.left" />
+    <state width="1877" height="175" key="GridCell.Tab.0.left/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.0.right" />
+    <state width="1877" height="175" key="GridCell.Tab.0.right/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.1.bottom" />
+    <state width="1877" height="175" key="GridCell.Tab.1.bottom/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.1.center" />
+    <state width="1877" height="175" key="GridCell.Tab.1.center/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.1.left" />
+    <state width="1877" height="175" key="GridCell.Tab.1.left/1920.1080" />
+    <state width="1877" height="175" key="GridCell.Tab.1.right" />
+    <state width="1877" height="175" key="GridCell.Tab.1.right/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.2.bottom" />
+    <state width="916" height="177" key="GridCell.Tab.2.bottom/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.2.center" />
+    <state width="916" height="177" key="GridCell.Tab.2.center/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.2.left" />
+    <state width="916" height="177" key="GridCell.Tab.2.left/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.2.right" />
+    <state width="916" height="177" key="GridCell.Tab.2.right/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.3.bottom" />
+    <state width="916" height="177" key="GridCell.Tab.3.bottom/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.3.center" />
+    <state width="916" height="177" key="GridCell.Tab.3.center/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.3.left" />
+    <state width="916" height="177" key="GridCell.Tab.3.left/1920.1080" />
+    <state width="916" height="177" key="GridCell.Tab.3.right" />
+    <state width="916" height="177" key="GridCell.Tab.3.right/1920.1080" />
     <state x="484" y="261" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" />
     <state x="484" y="261" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/1920.1080" />
     <state x="616" y="243" key="run.anything.popup" />
@@ -175,6 +176,19 @@
           <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs</url>
+          <line>79</line>
+          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Editor/ToDoIstEditor.cs" initialLine="79">
+            <startOffsets>
+              <option value="2371" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2392" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

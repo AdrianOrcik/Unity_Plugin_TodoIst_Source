@@ -6,7 +6,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-
+//TODO: still update as Renderer
+//TODO: Scroll panel vertical
 
 public class ToDoIstEditor : EditorWindow
 {
@@ -19,13 +20,12 @@ public class ToDoIstEditor : EditorWindow
     private List<TaskLine> m_tasks;
     private List<string> m_scriptNames;
     private bool m_settings;
+    private bool m_sorting;
     
     private enum GuiType{Simple,Group}
     private GuiType m_guiMode = GuiType.Simple;
 
     private const string HASTAG_PREFIX = "TODO:";
-    
-    //TODO: still update as Renderer
     
     [MenuItem("Window/ToDoIst", false, 1)]
     static void Init()
@@ -58,7 +58,6 @@ public class ToDoIstEditor : EditorWindow
                     pathScript.Add(mono.name,assetPath);
                 }
             }
-            
         }
         
         //Find TODOs in filtered scripts
@@ -112,12 +111,64 @@ public class ToDoIstEditor : EditorWindow
         GUIRender();
     }
 
+    List<TaskLine> SimpleTaskSort(List<TaskLine> tasks)
+    {
+        //TODO: refactor
+        for (int j = 0; j <= tasks.Count - 2; j++) {
+            for (int i = 0; i <= tasks.Count - 2; i++)
+            {
+                CodeTaskLine codeTaskLine = (CodeTaskLine) tasks[i];
+                CodeTaskLine nextCodeTaskLine = (CodeTaskLine) tasks[i+1];
+                if (codeTaskLine.TaskPriority < nextCodeTaskLine.TaskPriority) {
+                   TaskLine temp= tasks[i + 1];
+                   tasks[i + 1] = tasks[i];
+                   tasks[i] = temp;
+                }
+            }
+        }
+
+        return tasks;
+    }
+    
+    List<CodeTaskLine> SimpleTaskSort(List<CodeTaskLine> tasks)
+    {
+        //TODO: refactor
+        for (int j = 0; j <= tasks.Count - 2; j++) {
+            for (int i = 0; i <= tasks.Count - 2; i++)
+            {
+                CodeTaskLine codeTaskLine = (CodeTaskLine) tasks[i];
+                CodeTaskLine nextCodeTaskLine = (CodeTaskLine) tasks[i+1];
+                if (codeTaskLine.TaskPriority < nextCodeTaskLine.TaskPriority) {
+                    CodeTaskLine temp= tasks[i + 1];
+                    tasks[i + 1] = tasks[i];
+                    tasks[i] = temp;
+                }
+            }
+        }
+
+        return tasks;
+    }
+
     void GUIRender()
     {
         m_settings = EditorGUILayout.Foldout(m_settings,"Settings:");
-        if(m_settings){
-            m_guiMode = (GuiType)EditorGUILayout.EnumPopup("Show Mode: ",m_guiMode);
+        if(m_settings)
+        {
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+                m_guiMode = (GuiType)EditorGUILayout.EnumPopup("Show Mode: ",m_guiMode);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Tasks by priority:",GUILayout.Width(145));
+                m_sorting = EditorGUILayout.Toggle(m_sorting, GUILayout.Width(25));
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
         }
+
+        //TODO: sortovanie podla priority
         
         if (m_guiMode == GuiType.Group)
         {
@@ -126,6 +177,8 @@ public class ToDoIstEditor : EditorWindow
         }
         
         if(m_guiMode == GuiType.Simple){
+            
+            if(m_sorting) m_tasks = SimpleTaskSort(m_tasks);
             foreach (var task in m_tasks)
             {
                 CodeTaskLine codeTaskLine = (CodeTaskLine) task;
@@ -148,6 +201,8 @@ public class ToDoIstEditor : EditorWindow
                 if(codeTaskLine.ScriptName == scriptName) codeTaskLines.Add(codeTaskLine);
             }
 
+            if(m_sorting) codeTaskLines = SimpleTaskSort(codeTaskLines);
+            
             int taskID = 0;
             EditorGUILayout.BeginVertical("Box");
             Task_Header(codeTaskLines[taskID]);

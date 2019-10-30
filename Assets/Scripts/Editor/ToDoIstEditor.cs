@@ -23,6 +23,8 @@ public class ToDoIstEditor : EditorWindow
     
     private GuiType m_guiMode = GuiType.Simple;
 
+    private const string HASTAG_PREFIX = "TODO:";
+    
     //TODO: still update as Renderer
     
     [MenuItem("Window/ToDoIst", false, 1)]
@@ -47,17 +49,16 @@ public class ToDoIstEditor : EditorWindow
         Dictionary<string,string> pathScript = new Dictionary<string, string>();
         foreach (string assetPath in assetPaths)
         {
-            if (!assetPath.Contains("/Editor/"))
+            if (assetPath.Contains("/Editor/") || !assetPath.Contains("Assets")) continue;
+            if (assetPath.EndsWith(".cs") || assetPath.EndsWith(".js"))
             {
-                if (assetPath.EndsWith(".cs") || assetPath.EndsWith(".js"))
-                {
-                    MonoScript mono = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
-                    scripts.Add(mono);
-                    if(!pathScript.ContainsKey(mono.name)){ 
-                        pathScript.Add(mono.name,assetPath);
-                    }
+                MonoScript mono = AssetDatabase.LoadAssetAtPath<MonoScript>(assetPath);
+                scripts.Add(mono);
+                if(!pathScript.ContainsKey(mono.name)){ 
+                    pathScript.Add(mono.name,assetPath);
                 }
             }
+            
         }
         
         //Find TODOs in filtered scripts
@@ -71,20 +72,19 @@ public class ToDoIstEditor : EditorWindow
             // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
             while (scriptText != String.Empty)
             {
-                if (scriptText.Contains("//TODO:"))
+                if (scriptText.Contains(HASTAG_PREFIX))
                 {
-                    //TODO: dokoncit
                     //Priority handler
-//                    string prioritySubString =
-//                        scriptText.Substring(scriptText.IndexOf("//TODO:", StringComparison.Ordinal) - 3, 10);
+                    string prioritySubString =
+                        scriptText.Substring(scriptText.IndexOf(HASTAG_PREFIX, StringComparison.Ordinal) - 3, 3);
                     int priorityTask = 0;
-//                    for (int i = 0; i < prioritySubString.Length; i++)
-//                    {
-//                        if (prioritySubString[i] == '!') priorityTask++;
-//                    }
+                    for (int i = 0; i < prioritySubString.Length; i++)
+                    {
+                        if (prioritySubString[i] == '!') priorityTask++;
+                    }
                     //-----------------
                     
-                    int start = scriptText.IndexOf("//TODO:", StringComparison.Ordinal) + 7;
+                    int start = scriptText.IndexOf(HASTAG_PREFIX, StringComparison.Ordinal) + 5;
                     int end = scriptText.Substring(start).IndexOf("\n", StringComparison.Ordinal);
 
                     for (int i = 0; i < start + end + 1; i++)
@@ -109,6 +109,13 @@ public class ToDoIstEditor : EditorWindow
         }
         
         //------------------------------------------
+        GUIRender();
+    }
+
+
+
+    void GUIRender()
+    {
         m_settings = EditorGUILayout.Foldout(m_settings,"Settings:");
         if(m_settings){
             m_guiMode = (GuiType)EditorGUILayout.EnumPopup("Show Mode: ",m_guiMode);
@@ -128,7 +135,6 @@ public class ToDoIstEditor : EditorWindow
             }
         }
     }
-
 
     void SimpleGUIMode(CodeTaskLine codeTaskLine)
     {
@@ -165,7 +171,9 @@ public class ToDoIstEditor : EditorWindow
         GUILayout.Space(2);
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("TODO: ", EditorStyles.boldLabel,GUILayout.Width(57));
-        EditorGUILayout.LabelField(string.Format("{0} (!{1})",codeTaskLine.Message,codeTaskLine.TaskPriority));
+        GUI.backgroundColor = Color.white;
+        EditorGUILayout.TextField(string.Format("{0} (!{1})",codeTaskLine.Message,codeTaskLine.TaskPriority));
+        GUI.backgroundColor = GetPriorityColor(codeTaskLine.TaskPriority);
         if(codeTaskLine.TaskPriority > 0)
         { 
             GUI.backgroundColor = Color.white;
@@ -182,7 +190,6 @@ public class ToDoIstEditor : EditorWindow
         EditorGUILayout.EndVertical();
         
         GUI.backgroundColor = Color.white;
-
     }
 
     Color GetPriorityColor(int priority)

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,11 +17,10 @@ public class ToDoIstEditor : EditorWindow
     private const float ICON_SIZE = 20f;
     
     private List<TaskLine> m_tasks;
-
+    private List<string> m_scriptNames;
     private bool m_settings;
     
     private enum GuiType{Simple,Group}
-    
     private GuiType m_guiMode = GuiType.Simple;
 
     private const string HASTAG_PREFIX = "TODO:";
@@ -97,7 +97,7 @@ public class ToDoIstEditor : EditorWindow
 
                     string todo = scriptText.Substring(start, end);
                     scriptText = scriptText.Substring(start + end + 1);
-                    
+                    if(!m_scriptNames.Contains(script.name))m_scriptNames.Add(script.name);
                     AddNewCodeTask(script,todo, script.name, lineCount, pathScript[script.name], priorityTask);
                 }
                 else
@@ -112,8 +112,6 @@ public class ToDoIstEditor : EditorWindow
         GUIRender();
     }
 
-
-
     void GUIRender()
     {
         m_settings = EditorGUILayout.Foldout(m_settings,"Settings:");
@@ -121,21 +119,69 @@ public class ToDoIstEditor : EditorWindow
             m_guiMode = (GuiType)EditorGUILayout.EnumPopup("Show Mode: ",m_guiMode);
         }
         
-        foreach (var task in m_tasks)
+        if (m_guiMode == GuiType.Group)
         {
-            CodeTaskLine codeTaskLine = (CodeTaskLine) task;
-
-            if(m_guiMode == GuiType.Simple)
+            GroupGUIMode(m_tasks);
+            return;
+        }
+        
+        if(m_guiMode == GuiType.Simple){
+            foreach (var task in m_tasks)
             {
+                CodeTaskLine codeTaskLine = (CodeTaskLine) task;
                 SimpleGUIMode(codeTaskLine);
-            }
-            else
-            {
-                
             }
         }
     }
 
+   //------------GUI Modes
+    void GroupGUIMode(List<TaskLine> m_tasks)
+    {
+        CodeTaskLine _codeTaskLine = null;
+
+        foreach (var scriptName in m_scriptNames)
+        {
+            List<CodeTaskLine> codeTaskLines = new List<CodeTaskLine>();
+            foreach (var task in m_tasks)
+            {
+                CodeTaskLine codeTaskLine = (CodeTaskLine) task;
+                if(codeTaskLine.ScriptName == scriptName) codeTaskLines.Add(codeTaskLine);
+            }
+
+            int taskID = 0;
+            EditorGUILayout.BeginVertical("Box");
+            Task_Header(codeTaskLines[taskID]);
+            
+            foreach (var task in codeTaskLines)
+            {
+                GUI.backgroundColor = GetPriorityColor(codeTaskLines[taskID].TaskPriority);
+                EditorGUILayout.BeginVertical("Box");
+                    EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField(" ");
+                        Task_DoneButton(task);
+                    EditorGUILayout.EndHorizontal();
+                EditorGUI.indentLevel++;
+                EditorGUILayout.BeginHorizontal();
+                    Task_ScriptPath(task);
+                    Task_ScriptButton(task);
+                EditorGUILayout.EndHorizontal();
+                GUILayout.Space(2);
+                EditorGUILayout.BeginHorizontal();
+                    Task_Message(task);
+                EditorGUILayout.EndHorizontal();
+                EditorGUI.indentLevel--;
+                
+                GUI.backgroundColor = Color.white;
+                GUILayout.Space(2);
+                EditorGUILayout.EndHorizontal();
+
+                taskID++; 
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
+    }
+    
     void SimpleGUIMode(CodeTaskLine codeTaskLine)
     {
 
@@ -143,47 +189,21 @@ public class ToDoIstEditor : EditorWindow
         EditorGUILayout.BeginVertical("Box");
                 
         EditorGUILayout.BeginHorizontal();
-
-        EditorGUILayout.LabelField(string.Format("{0}.{1}",codeTaskLine.ScriptName.Replace(
-                codeTaskLine.ScriptName.Substring(0,1),
-                codeTaskLine.ScriptName.Substring(0,1).ToUpper()),
-            codeTaskLine.ScriptPath.EndsWith(".cs")? "cs" : "js"),EditorStyles.boldLabel);
-        
-        GUI.backgroundColor = Color.white;
-        if (GUILayout.Button(CreateGUIIcon(m_iconDone),GUILayout.Width(20),GUILayout.Height(20)))
-        {
-            RemoveLineFromScript(codeTaskLine.ScriptPath, codeTaskLine);
-        }
-        GUI.backgroundColor = GetPriorityColor(codeTaskLine.TaskPriority);
-        
+            Task_Header(codeTaskLine);
+            Task_DoneButton(codeTaskLine);
         EditorGUILayout.EndHorizontal();
         EditorGUI.indentLevel++;
+        
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField(string.Format("{0} at line {1}.", codeTaskLine.ScriptPath,codeTaskLine.Line));
-        GUI.backgroundColor = Color.white;
-        if (GUILayout.Button(CreateGUIIcon(m_iconScript),GUILayout.Width(20),GUILayout.Height(20)))
-        {
-            AssetDatabase.OpenAsset (codeTaskLine.Script, codeTaskLine.Line);
-        }
-        GUI.backgroundColor = GetPriorityColor(codeTaskLine.TaskPriority);
-                        
+            Task_ScriptPath(codeTaskLine);
+            Task_ScriptButton(codeTaskLine);
         EditorGUILayout.EndHorizontal();
+        
         GUILayout.Space(2);
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("TODO: ", EditorStyles.boldLabel,GUILayout.Width(57));
-        GUI.backgroundColor = Color.white;
-        EditorGUILayout.TextField(string.Format("{0} (!{1})",codeTaskLine.Message,codeTaskLine.TaskPriority));
-        GUI.backgroundColor = GetPriorityColor(codeTaskLine.TaskPriority);
-        if(codeTaskLine.TaskPriority > 0)
-        { 
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button(GetPriorityFlag(codeTaskLine.TaskPriority-1),GUILayout.Width(20),GUILayout.Height(20)))
-            {
-                Debug.Log("This task has priority, keep working hard!");
-            }
-            GUI.backgroundColor = GetPriorityColor(codeTaskLine.TaskPriority);
-        }
+            Task_Message(codeTaskLine);
         EditorGUILayout.EndHorizontal();
+        
         EditorGUI.indentLevel--;
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.EndHorizontal();
@@ -191,6 +211,8 @@ public class ToDoIstEditor : EditorWindow
         
         GUI.backgroundColor = Color.white;
     }
+    
+    //-------------Utils
 
     Color GetPriorityColor(int priority)
     {
@@ -258,5 +280,56 @@ public class ToDoIstEditor : EditorWindow
         return new GUIContent(icon);
     }
     
+    
+    //--------------GUI Elements
+    void Task_Header(CodeTaskLine task)
+    {
+        EditorGUILayout.LabelField(string.Format("{0}.{1}",task.ScriptName.Replace(
+                task.ScriptName.Substring(0,1),
+                task.ScriptName.Substring(0,1).ToUpper()),
+            task.ScriptPath.EndsWith(".cs")? "cs" : "js"),EditorStyles.boldLabel);
+    }
+
+    void Task_DoneButton(CodeTaskLine task)
+    {
+        GUI.backgroundColor = Color.white;
+        if (GUILayout.Button(CreateGUIIcon(m_iconDone),GUILayout.Width(20),GUILayout.Height(20)))
+        {
+            RemoveLineFromScript(task.ScriptPath, task);
+        }
+        GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+    }
+
+    void Task_ScriptPath(CodeTaskLine task)
+    {
+        EditorGUILayout.LabelField(string.Format("{0} at line {1}.", task.ScriptPath,task.Line));
+    }
+
+    void Task_ScriptButton(CodeTaskLine task)
+    {
+        GUI.backgroundColor = Color.white;
+        if (GUILayout.Button(CreateGUIIcon(m_iconScript),GUILayout.Width(ICON_SIZE),GUILayout.Height(ICON_SIZE)))
+        {
+            AssetDatabase.OpenAsset (task.Script, task.Line);
+        }
+        GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+    }
+
+    void Task_Message(CodeTaskLine task)
+    {
+        EditorGUILayout.LabelField("TODO: ", EditorStyles.boldLabel,GUILayout.Width(57));
+        GUI.backgroundColor = Color.white;
+        EditorGUILayout.TextField(string.Format("{0} (!{1})",task.Message,task.TaskPriority));
+        GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+        if(task.TaskPriority > 0)
+        { 
+            GUI.backgroundColor = Color.white;
+            if (GUILayout.Button(GetPriorityFlag(task.TaskPriority-1),GUILayout.Width(ICON_SIZE),GUILayout.Height(ICON_SIZE)))
+            {
+                Debug.Log("This task has priority, keep working hard!");
+            }
+            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+        }
+    }
     
 }

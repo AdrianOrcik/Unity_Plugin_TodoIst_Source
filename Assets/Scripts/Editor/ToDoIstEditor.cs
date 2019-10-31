@@ -11,6 +11,8 @@ using UnityEngine;
 
 public class ToDoIstEditor : EditorWindow
 {
+
+    private Vector2 m_scrollPosition;
     private Texture2D m_iconScript;
     private Texture2D m_iconDone;
     private Texture2D[] m_iconFlags = new Texture2D[3];
@@ -169,14 +171,14 @@ public class ToDoIstEditor : EditorWindow
         }
 
         //TODO: sortovanie podla priority
+
+        m_scrollPosition = EditorGUILayout.BeginScrollView(m_scrollPosition);
         
         if (m_guiMode == GuiType.Group)
         {
             GroupGUIMode(m_tasks);
-            return;
         }
-        
-        if(m_guiMode == GuiType.Simple){
+        else if(m_guiMode == GuiType.Simple){
             
             if(m_sorting) m_tasks = SimpleTaskSort(m_tasks);
             foreach (var task in m_tasks)
@@ -185,6 +187,8 @@ public class ToDoIstEditor : EditorWindow
                 SimpleGUIMode(codeTaskLine);
             }
         }
+        
+        EditorGUILayout.EndScrollView();
     }
 
    //------------GUI Modes

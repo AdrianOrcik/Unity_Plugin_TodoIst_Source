@@ -150,6 +150,8 @@ public class ToDoIstEditor : EditorWindow
 
         return tasks;
     }
+    
+
 
     void GUIRender()
     {
@@ -194,50 +196,51 @@ public class ToDoIstEditor : EditorWindow
    //------------GUI Modes
     void GroupGUIMode(List<TaskLine> m_tasks)
     {
-        CodeTaskLine _codeTaskLine = null;
-
-        foreach (var scriptName in m_scriptNames)
+        Group group = new Group();
+        foreach (var task in m_tasks)
         {
-            List<CodeTaskLine> codeTaskLines = new List<CodeTaskLine>();
-            foreach (var task in m_tasks)
-            {
-                CodeTaskLine codeTaskLine = (CodeTaskLine) task;
-                if(codeTaskLine.ScriptName == scriptName) codeTaskLines.Add(codeTaskLine);
-            }
+            CodeTaskLine codeTaskLine = (CodeTaskLine) task;
+            group.AddNew(codeTaskLine);
+        }
 
-            if(m_sorting) codeTaskLines = SimpleTaskSort(codeTaskLines);
-            
-            int taskID = 0;
+        //TODO: refactor
+        if(m_sorting) group.GroupTasks = group.SortDicByValue();
+        
+        int taskID = 0;
+        foreach (var key in  group.GroupTasks.Keys)
+        {
             EditorGUILayout.BeginVertical("Box");
-            Task_Header(codeTaskLines[taskID]);
-            
-            foreach (var task in codeTaskLines)
+            GroupTask groupTask = group.GroupTasks[key];
+            Task_Header(groupTask.Tasks[taskID]);
+        
+            for (int i = 0; i < group.GroupTasks[key].Tasks.Count; i++)
             {
-                GUI.backgroundColor = GetPriorityColor(codeTaskLines[taskID].TaskPriority);
+                GUI.backgroundColor = GetPriorityColor(groupTask.Tasks[taskID].TaskPriority);
                 EditorGUILayout.BeginVertical("Box");
                     EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField(" ");
-                        Task_DoneButton(task);
+                        Task_DoneButton(groupTask.Tasks[taskID]);
                     EditorGUILayout.EndHorizontal();
                 EditorGUI.indentLevel++;
                 EditorGUILayout.BeginHorizontal();
-                    Task_ScriptPath(task);
-                    Task_ScriptButton(task);
+                    Task_ScriptPath(groupTask.Tasks[taskID]);
+                    Task_ScriptButton(groupTask.Tasks[taskID]);
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(2);
                 EditorGUILayout.BeginHorizontal();
-                    Task_Message(task);
+                    Task_Message(groupTask.Tasks[taskID]);
                 EditorGUILayout.EndHorizontal();
                 EditorGUI.indentLevel--;
                 
                 GUI.backgroundColor = Color.white;
                 GUILayout.Space(2);
                 EditorGUILayout.EndHorizontal();
-
-                taskID++; 
+                taskID++;
             }
 
-            EditorGUILayout.EndHorizontal();
+            taskID = 0;
+            EditorGUILayout.EndVertical();
+
         }
     }
     

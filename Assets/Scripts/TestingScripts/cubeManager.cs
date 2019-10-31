@@ -14,6 +14,7 @@ public class cubeManager : MonoBehaviour
     
     
     //TODO: test2
+    //!TODO: testPriority
     // Update is called once per frame
     void Update()
     {

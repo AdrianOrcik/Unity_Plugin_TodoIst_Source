@@ -29,7 +29,6 @@ namespace Editor.TodoIst
             for(int i = 0; i < HASTAGS_PREFIX.Length; i++){
                 FindHastagInScripts(scripts, pathScript,HASTAGS_PREFIX[i]);
             }
-
         }
     
         void HandleCorrectScripts(string[] _assetPaths, ref List<MonoScript> _scripts, ref Dictionary<string,string> _pathScript)
@@ -54,9 +53,7 @@ namespace Editor.TodoIst
             {
                 var scriptText = script.text;
                 var lineCount = 0;
-
-                bool isRenderingBox = false;
-            
+                
                 while (scriptText != String.Empty)
                 {
                     if (scriptText.Contains(_hastag))
@@ -79,7 +76,7 @@ namespace Editor.TodoIst
                         AddNewCodeTask(todoIst.Get_tasks,script,todo, script.name, lineCount, _pathScript[script.name], taskPriority, _hastag);
                     }
                     else
-                    {
+                    { 
                         lineCount = 0;
                         scriptText = String.Empty;
                     }

@@ -2,9 +2,6 @@
 using UnityEditor;
 using UnityEngine;
 
-//TODO: still update as Renderer
-//TODO: Scroll panel vertical
-
 namespace Editor.TodoIst
 {
     public class TodoIstEditor : EditorWindow
@@ -83,28 +80,19 @@ namespace Editor.TodoIst
                 EditorGUILayout.BeginVertical("Box");
                 GroupTask groupTask = group.GroupTasks[key];
                 todoIst.GUI_TaskHeader(groupTask.Tasks[taskID]);
-        
+
                 for (int i = 0; i < group.GroupTasks[key].Tasks.Count; i++)
                 {
                     todoIst.GUI_SetPriorityColor(groupTask.Tasks[taskID].TaskPriority);
                     EditorGUILayout.BeginVertical("Box");
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(" ");
-                    todoIst.GUI_Button_Done(groupTask.Tasks[taskID]);
-                    EditorGUILayout.EndHorizontal();
-                    EditorGUI.indentLevel++;
-                    EditorGUILayout.BeginHorizontal();
-                    todoIst.GUI_ScriptPath(groupTask.Tasks[taskID]);
-                    todoIst.GUI_Button_Script(groupTask.Tasks[taskID]);
-                    EditorGUILayout.EndHorizontal();
-                    GUILayout.Space(2);
+                    
                     EditorGUILayout.BeginHorizontal();
                     todoIst.GUI_TaskMessage(groupTask.Tasks[taskID]);
+                    todoIst.GUI_Button_Done(groupTask.Tasks[taskID]);
+                    todoIst.GUI_Button_Script(groupTask.Tasks[taskID]);
                     EditorGUILayout.EndHorizontal();
-                    EditorGUI.indentLevel--;
-
+                    
                     todoIst.GUI_SetPriorityColor();
-                    GUILayout.Space(2);
                     EditorGUILayout.EndHorizontal();
                     taskID++;
                 }
@@ -117,31 +105,28 @@ namespace Editor.TodoIst
     
         void SimpleTaskLayout(CodeTaskLine codeTaskLine)
         {
+          
             todoIst.GUI_SetPriorityColor(codeTaskLine.TaskPriority);
             EditorGUILayout.BeginVertical("Box");
                 
             EditorGUILayout.BeginHorizontal();
             todoIst.GUI_TaskHeader(codeTaskLine);
             todoIst.GUI_Button_Done(codeTaskLine);
-            EditorGUILayout.EndHorizontal();
-            EditorGUI.indentLevel++;
-        
-            EditorGUILayout.BeginHorizontal();
-            todoIst.GUI_ScriptPath(codeTaskLine);
             todoIst.GUI_Button_Script(codeTaskLine);
             EditorGUILayout.EndHorizontal();
         
             GUILayout.Space(2);
+
+            todoIst.GUI_DrawLine(Color.gray);
             EditorGUILayout.BeginHorizontal();
             todoIst.GUI_TaskMessage(codeTaskLine);
             EditorGUILayout.EndHorizontal();
-        
-            EditorGUI.indentLevel--;
+ 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
-        
-            GUI.backgroundColor = Color.white;
+
+            todoIst.GUI_SetPriorityColor(); 
         }
 
         void SettingsLayout()

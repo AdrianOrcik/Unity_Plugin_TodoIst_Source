@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Editor.TodoIst;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace Editor.TodoIst
@@ -57,6 +58,7 @@ namespace Editor.TodoIst
         public void Task_DoneButton(CodeTaskLine task)
         {
             GUI.backgroundColor = Color.white;
+            
             if (GUILayout.Button(CreateGUIIcon(m_icons.m_iconDone), GUILayout.Width(20), GUILayout.Height(20)))
             {
                 RemoveLineFromScript(task.ScriptPath, task);
@@ -81,6 +83,7 @@ namespace Editor.TodoIst
         public void Task_ScriptButton(CodeTaskLine task)
         {
             GUI.backgroundColor = Color.white;
+            
             if (GUILayout.Button(CreateGUIIcon(m_icons.m_iconScript), GUILayout.Width(ICON_SIZE),
                 GUILayout.Height(ICON_SIZE)))
             {
@@ -109,7 +112,7 @@ namespace Editor.TodoIst
                 }
             }
 
-            todoIst.Get_tasks.Remove(codeTaskLine);
+            todoIst.m_tasks.Remove(codeTaskLine);
             File.Delete(pathScript);
             File.Move(tempFile, pathScript);
             AssetDatabase.Refresh();
@@ -127,25 +130,38 @@ namespace Editor.TodoIst
         {
             EditorGUILayout.LabelField(string.Format("{0} at line {1}.", task.ScriptPath, task.Line));
         }
-
         public void Task_Message(CodeTaskLine task)
         {
-            EditorGUILayout.LabelField("TODO: ", EditorStyles.boldLabel, GUILayout.Width(57));
-            GUI.backgroundColor = Color.white;
-            EditorGUILayout.TextField(string.Format("{0} (!{1})", task.Message, task.TaskPriority));
-            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
-            if (task.TaskPriority > 0)
-            {
-                GUI.backgroundColor = Color.white;
-                if (GUILayout.Button(GetPriorityFlag(task.TaskPriority - 1), GUILayout.Width(ICON_SIZE),
-                    GUILayout.Height(ICON_SIZE)))
-                {
-                    Debug.Log("This task has priority, keep working hard!");
-                }
 
-                GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
-            }
+            EditorGUILayout.LabelField("TODO:", EditorStyles.boldLabel, GUILayout.Width(45));
+            EditorGUILayout.LabelField(string.Format("({0}) {1}" , task.Line, task.Message));
+
+
+            //TODO: use or remove flag icon
+//            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+//            if (task.TaskPriority > 0)
+//            {
+//                GUI.backgroundColor = Color.white;
+//                if (GUILayout.Button(GetPriorityFlag(task.TaskPriority - 1), GUILayout.Width(ICON_SIZE),
+//                    GUILayout.Height(ICON_SIZE)))
+//                {
+//                    Debug.Log("This task has priority, keep working hard!");
+//                }
+//            }
+//            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+        }
+        
+        public void DrawUILine(Color color, float thickness = 0.5f, int padding = 10)
+        {
+            Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding+thickness));
+            r.height = thickness;
+            r.y+=padding/2;
+            r.x-=2;
+            r.width +=6;
+            EditorGUI.DrawRect(r, color);
         }
 
     }
+    
+
 }

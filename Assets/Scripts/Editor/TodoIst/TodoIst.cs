@@ -11,10 +11,10 @@ namespace Editor.TodoIst
         private TodoIstGUI todoIstGUI;
     
         private List<string> m_scriptNames;
-        private List<TaskLine> m_tasks;
+        public List<TaskLine> m_tasks;
     
         public List<string> Get_scriptNames { get { return m_scriptNames; } }
-        public List<TaskLine> Get_tasks //TODO: nech vsetko riesi tento script
+        public List<TaskLine> Get_tasks 
         { 
             get { return m_tasks; }
             set { m_tasks = value; }
@@ -48,6 +48,7 @@ namespace Editor.TodoIst
         {
             todoIstGUI.Task_Message(task);
         }
+        
         public void GUI_Button_Done(CodeTaskLine task)
         {
             todoIstGUI.Task_DoneButton(task);
@@ -62,6 +63,11 @@ namespace Editor.TodoIst
         {
             if(taskPriority == -1) GUI.backgroundColor = Color.white;
             GUI.backgroundColor = todoIstGUI.GetPriorityColor(taskPriority);
+        }
+        
+        public void GUI_DrawLine(Color color)
+        {
+            todoIstGUI.DrawUILine(color);
         }
 
         public void SortTasksByPriority()
@@ -80,7 +86,7 @@ namespace Editor.TodoIst
                 }
             }
         }
-        
+
 //        List<CodeTaskLine> SimpleTaskSort(List<CodeTaskLine> tasks)
 //        {
 //            //TODO: refactor

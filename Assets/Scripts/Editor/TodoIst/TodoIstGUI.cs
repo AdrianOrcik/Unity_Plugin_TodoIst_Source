@@ -85,7 +85,7 @@ namespace Editor.TodoIst
         {
             for(int i = 0; i< task.Tags.Count;i++){
                 GUI.backgroundColor = Color.white;
-                if (GUILayout.Button(task.Tags[i], "MiniButton", GUILayout.Width(10 * task.Tags[i].Length ))) { }
+                GUILayout.Button(task.Tags[i], "MiniButton", GUILayout.Width(10 * task.Tags[i].Length));
                 GUI.backgroundColor = TodoIstUtils.GetPriorityColor(task.TaskPriority);
             }
         }
@@ -96,6 +96,11 @@ namespace Editor.TodoIst
                     task.ScriptName.Substring(0, 1),
                     task.ScriptName.Substring(0, 1).ToUpper()),
                 task.ScriptPath.EndsWith(".cs") ? "cs" : "js"), EditorStyles.boldLabel);
+        }
+        
+        public void Task_Tag_Header(string header)
+        {
+            GUILayout.Button(header, "MiniButton", GUILayout.Width(10 * header.Length));
         }
 
         public void Task_ScriptPath(CodeTaskLine task)

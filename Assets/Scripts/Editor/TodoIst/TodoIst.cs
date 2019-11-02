@@ -41,6 +41,11 @@ namespace Editor.TodoIst
         {
             todoIstGUI.Task_Header(task);  
         }
+        
+        public void GUI_TagHeader(string header)
+        {
+            todoIstGUI.Task_Tag_Header(header);  
+        }
 
         public void GUI_ScriptPath(CodeTaskLine task)
         {

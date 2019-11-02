@@ -10,7 +10,8 @@ namespace Editor.TodoIst
     
         private Vector2 m_scrollPosition;
         private bool m_settings;
-        private bool m_sorting;
+        private bool m_prioritySorting;
+        private bool m_tagSorting;
     
         private enum GuiType{Simple,Group}
         private GuiType m_guiMode = GuiType.Group;
@@ -45,23 +46,65 @@ namespace Editor.TodoIst
             }
         
             m_scrollPosition = EditorGUILayout.BeginScrollView(m_scrollPosition);
-        
-            if (m_guiMode == GuiType.Group)
-            {
-                GroupTaskLayout(todoIst.Get_tasks);
-            }
-            else if(m_guiMode == GuiType.Simple){
 
-                if(m_sorting)todoIst.SortTasksByPriority();
-                foreach (var task in todoIst.Get_tasks)
+
+            if (m_tagSorting)
+            {
+
+                GroupTagsLayout(todoIst.Get_tasks, "SKI");
+
+            }else{
+                if (m_guiMode == GuiType.Group)
                 {
-                    CodeTaskLine codeTaskLine = (CodeTaskLine) task;
-                    SimpleTaskLayout(codeTaskLine);
+                    GroupTaskLayout(todoIst.Get_tasks);
+                }
+                else if(m_guiMode == GuiType.Simple){
+
+                    if(m_prioritySorting)todoIst.SortTasksByPriority();
+                    foreach (var task in todoIst.Get_tasks)
+                    {
+                        CodeTaskLine codeTaskLine = (CodeTaskLine) task;
+                        SimpleTaskLayout(codeTaskLine);
+                    }
                 }
             }
         
             EditorGUILayout.EndScrollView();
         }
+        
+        void GroupTagsLayout(List<TaskLine> m_tasks, string tag)
+        {
+            
+            List<CodeTaskLine> filteredTasks = new List<CodeTaskLine>();
+            foreach (var task in m_tasks)
+            {
+                CodeTaskLine codeTaskLine = (CodeTaskLine) task;
+                if (codeTaskLine.Tags.Contains(tag))
+                {
+                    filteredTasks.Add(codeTaskLine);
+                }
+            }
+            
+            EditorGUILayout.BeginVertical("Box");
+            todoIst.GUI_TagHeader(tag);
+
+            foreach (var task in  filteredTasks)
+            {
+                todoIst.GUI_SetPriorityColor(task.TaskPriority);
+                EditorGUILayout.BeginVertical("Box");
+
+                EditorGUILayout.BeginHorizontal();
+                todoIst.GUI_TaskMessage(task);
+                todoIst.GUI_Button_Done(task);
+                todoIst.GUI_Button_Script(task);
+                EditorGUILayout.EndHorizontal();
+                
+                todoIst.GUI_SetPriorityColor();
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.EndVertical();
+    }
         
         void GroupTaskLayout(List<TaskLine> m_tasks)
         {
@@ -72,7 +115,7 @@ namespace Editor.TodoIst
                 group.AddNew(codeTaskLine);
             }
 
-            if (m_sorting)
+            if (m_prioritySorting)
             {
                 group.GroupTasks = group.SortDicByValue();
                 foreach (var tasks in group.GroupTasks.Values)
@@ -153,7 +196,11 @@ namespace Editor.TodoIst
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Tasks by priority:",GUILayout.Width(145));
-            m_sorting = EditorGUILayout.Toggle(m_sorting, GUILayout.Width(25));
+            m_prioritySorting = EditorGUILayout.Toggle(m_prioritySorting, GUILayout.Width(25));
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Tasks by tags:",GUILayout.Width(145));
+            m_tagSorting = EditorGUILayout.Toggle(m_tagSorting, GUILayout.Width(25));
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
         }

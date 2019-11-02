@@ -8,10 +8,11 @@ Unity todo editor extension
   * Sorting by priority
   * View tasks layouts
 * **Code-First Implementation**
-  * Generating Tasks from code
+  * Generating tasks from code
+  * Programmable tasks in code
   * Open a script exactly on task line
   * After task is done, remove todos from code
-  
+   
 :package: Installing
 ---------
 * Download package and import to Unity

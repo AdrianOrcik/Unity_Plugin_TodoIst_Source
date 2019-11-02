@@ -71,9 +71,16 @@ namespace Editor.TodoIst
                 CodeTaskLine codeTaskLine = (CodeTaskLine) task;
                 group.AddNew(codeTaskLine);
             }
+
+            if (m_sorting)
+            {
+                group.GroupTasks = group.SortDicByValue();
+                foreach (var tasks in group.GroupTasks.Values)
+                {
+                    TodoIstUtils.SimpleTaskSort(tasks.Tasks);
+                }
+            }
             
-            if(m_sorting) group.GroupTasks = group.SortDicByValue();
-        
             int taskID = 0;
             foreach (var key in  group.GroupTasks.Keys)
             {

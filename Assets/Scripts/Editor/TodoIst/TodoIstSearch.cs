@@ -91,7 +91,7 @@ namespace Editor.TodoIst
         {
             int priorityTask = 0;
             string prioritySubString =
-                _scriptText.Substring(_scriptText.IndexOf(_hastag, StringComparison.Ordinal) - (_hastag.Length - WHITE_SPACE_POSTFIX), 3);
+                _scriptText.Substring(_scriptText.IndexOf(_hastag, StringComparison.Ordinal) - 3, 3);
             for (int i = 0; i < prioritySubString.Length; i++)
             {
                 if (prioritySubString[i] == '!') priorityTask++;

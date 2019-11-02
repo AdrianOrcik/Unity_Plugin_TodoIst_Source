@@ -1,6 +1,6 @@
 :rocket: TodoIst
 ---------
-Unity editor extension
+Space for your tasks in unity
 
 ![image](https://user-images.githubusercontent.com/14979589/68075850-614fb680-fdb6-11e9-96dc-82b794d70b88.png)
 

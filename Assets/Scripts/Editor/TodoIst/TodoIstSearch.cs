@@ -16,7 +16,7 @@ namespace Editor.TodoIst
         private string[] HASTAGS_PREFIX = new[] {"TODO", "FIX", "BUG"}; //TOOD: add to settings?
         private const int WHITE_SPACE_POSTFIX = 2;
         
-        public void Search(ref List<TaskLine> m_tasks, ref List<string> m_scriptNames)
+        public void Search(ref List<TaskLine> m_tasks, ref List<string> m_scriptNames, int hastagID = -1)
         {
             m_tasks = new List<TaskLine>();
             m_scriptNames = new List<string>();
@@ -27,6 +27,14 @@ namespace Editor.TodoIst
             Dictionary<string,string> pathScript = new Dictionary<string, string>();
 
             HandleCorrectScripts(assetPaths, ref scripts, ref pathScript);
+
+            //Search by hastag
+            if (hastagID != -1)
+            {
+                FindHastagInScripts(scripts, pathScript,HASTAGS_PREFIX[hastagID]);
+                return;
+            }
+            
             for(int i = 0; i < HASTAGS_PREFIX.Length; i++){
                 FindHastagInScripts(scripts, pathScript,HASTAGS_PREFIX[i]);
             }

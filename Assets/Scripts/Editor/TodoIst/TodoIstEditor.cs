@@ -12,6 +12,7 @@ namespace Editor.TodoIst
         private bool m_settings;
         private bool m_prioritySorting;
         private bool m_tagSorting;
+        private bool m_hastagSorting;
     
         private enum GuiType{Simple,Group}
         private GuiType m_guiMode = GuiType.Group;
@@ -33,7 +34,13 @@ namespace Editor.TodoIst
         {
             Init();
             todoIst.Init();
-            todoIst.Search();
+
+            if (m_hastagSorting)
+            {
+                todoIst.SearchByHastag(0);
+            }
+            else todoIst.Search();
+            
             GUIRenderer();
         }
     
@@ -201,6 +208,10 @@ namespace Editor.TodoIst
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Tasks by tags:",GUILayout.Width(145));
             m_tagSorting = EditorGUILayout.Toggle(m_tagSorting, GUILayout.Width(25));
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Tasks by hastag:",GUILayout.Width(145));
+            m_hastagSorting = EditorGUILayout.Toggle(m_hastagSorting, GUILayout.Width(25));
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
         }

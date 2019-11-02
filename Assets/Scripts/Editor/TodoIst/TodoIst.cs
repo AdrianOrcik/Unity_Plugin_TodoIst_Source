@@ -36,6 +36,11 @@ namespace Editor.TodoIst
         {
             todoIstSearch.Search(ref m_tasks,ref m_scriptNames);
         }
+        
+        public void SearchByHastag(int hastagID)
+        {
+            todoIstSearch.Search(ref m_tasks,ref m_scriptNames,hastagID);
+        }
 
         public void GUI_TaskHeader(CodeTaskLine task)
         {

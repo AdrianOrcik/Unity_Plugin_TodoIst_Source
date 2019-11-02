@@ -36,12 +36,12 @@ namespace Editor.TodoIst
 
         void InitTextures()
         {
-            m_icons.m_iconDone = Resources.Load<Texture2D>("icons/icon_done");
-            m_icons.m_iconScript = Resources.Load<Texture2D>("icons/icon_script");
+            m_icons.m_iconDone = Resources.Load<Texture2D>("TodoIstIcons/icon_done");
+            m_icons.m_iconScript = Resources.Load<Texture2D>("TodoIstIcons/icon_script");
             m_icons.m_iconFlags = new Texture2D[3];
-            m_icons.m_iconFlags[0] = Resources.Load<Texture2D>("icons/icon_value_1");
-            m_icons.m_iconFlags[1] = Resources.Load<Texture2D>("icons/icon_value_2");
-            m_icons.m_iconFlags[2] = Resources.Load<Texture2D>("icons/icon_value_3");
+            m_icons.m_iconFlags[0] = Resources.Load<Texture2D>("TodoIstIcons/icon_value_1");
+            m_icons.m_iconFlags[1] = Resources.Load<Texture2D>("TodoIstIcons/icon_value_2");
+            m_icons.m_iconFlags[2] = Resources.Load<Texture2D>("TodoIstIcons/icon_value_3");
         }
 
         public GUIContent GetPriorityFlag(int priority)

@@ -13,7 +13,7 @@ namespace Editor.TodoIst
         private bool m_sorting;
     
         private enum GuiType{Simple,Group}
-        private GuiType m_guiMode = GuiType.Simple;
+        private GuiType m_guiMode = GuiType.Group;
 
     
         [MenuItem("Window/ToDoIst", false, 1)]

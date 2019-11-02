@@ -9,7 +9,6 @@ public class game : MonoBehaviour
     public cubeManager CubeManager;
     
     // Start is called before the first frame update
-    //!!TODO: test
     void Start()
     {
         

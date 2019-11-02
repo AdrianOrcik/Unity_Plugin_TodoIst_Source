@@ -11,9 +11,9 @@ public class cubeManager : MonoBehaviour
         
     }
     
+    //TODO: test1
+    //!!!TODO: test2
     
-    
-    //TODO: test2
     // Update is called once per frame
     void Update()
     {

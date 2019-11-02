@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace Editor.TodoIst
@@ -9,9 +12,9 @@ namespace Editor.TodoIst
     
         private TodoIstSearch todoIstSearch;
         private TodoIstGUI todoIstGUI;
-    
+
         private List<string> m_scriptNames;
-        public List<TaskLine> m_tasks;
+        private List<TaskLine> m_tasks;
     
         public List<string> Get_scriptNames { get { return m_scriptNames; } }
         public List<TaskLine> Get_tasks 
@@ -62,49 +65,21 @@ namespace Editor.TodoIst
         public void GUI_SetPriorityColor(int taskPriority = -1)
         {
             if(taskPriority == -1) GUI.backgroundColor = Color.white;
-            GUI.backgroundColor = todoIstGUI.GetPriorityColor(taskPriority);
+            GUI.backgroundColor = TodoIstUtils.GetPriorityColor(taskPriority);
         }
         
         public void GUI_DrawLine(Color color)
         {
-            todoIstGUI.DrawUILine(color);
+            TodoIstUtils.DrawUILine(color);
         }
 
         public void SortTasksByPriority()
         {
-            //TODO: refactor
-            for (int j = 0; j <= m_tasks.Count - 2; j++) {
-                for (int i = 0; i <= m_tasks.Count - 2; i++)
-                {
-                    CodeTaskLine codeTaskLine = (CodeTaskLine) m_tasks[i];
-                    CodeTaskLine nextCodeTaskLine = (CodeTaskLine) m_tasks[i+1];
-                    if (codeTaskLine.TaskPriority < nextCodeTaskLine.TaskPriority) {
-                        TaskLine temp= m_tasks[i + 1];
-                        m_tasks[i + 1] = m_tasks[i];
-                        m_tasks[i] = temp;
-                    }
-                }
-            }
+            TodoIstUtils.SortTasksByPriority(ref m_tasks);
         }
+        
 
-//        List<CodeTaskLine> SimpleTaskSort(List<CodeTaskLine> tasks)
-//        {
-//            //TODO: refactor
-//            for (int j = 0; j <= tasks.Count - 2; j++) {
-//                for (int i = 0; i <= tasks.Count - 2; i++)
-//                {
-//                    CodeTaskLine codeTaskLine = (CodeTaskLine) tasks[i];
-//                    CodeTaskLine nextCodeTaskLine = (CodeTaskLine) tasks[i+1];
-//                    if (codeTaskLine.TaskPriority < nextCodeTaskLine.TaskPriority) {
-//                        CodeTaskLine temp= tasks[i + 1];
-//                        tasks[i + 1] = tasks[i];
-//                        tasks[i] = temp;
-//                    }
-//                }
-//            }
-//
-//            return tasks;
-//        }
-//    
+
+
     }
 }

@@ -61,24 +61,12 @@ namespace Editor.TodoIst
             
             if (GUILayout.Button(CreateGUIIcon(m_icons.m_iconDone), GUILayout.Width(20), GUILayout.Height(20)))
             {
-                RemoveLineFromScript(task.ScriptPath, task);
+                TodoIstUtils.RemoveLineFromScript(task.ScriptPath, task);
             }
 
-            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+            GUI.backgroundColor = TodoIstUtils.GetPriorityColor(task.TaskPriority);
         }
-
-        public Color GetPriorityColor(int priority)
-        {
-            switch (priority)
-            {
-                case 0: return Color.white;
-                case 1: return Color.cyan;
-                case 2: return Color.yellow;
-                case 3: return Color.red;
-            }
-
-            return Color.white;
-        }
+        
 
         public void Task_ScriptButton(CodeTaskLine task)
         {
@@ -90,34 +78,9 @@ namespace Editor.TodoIst
                 AssetDatabase.OpenAsset(task.Script, task.Line);
             }
 
-            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
+            GUI.backgroundColor = TodoIstUtils.GetPriorityColor(task.TaskPriority);
         }
-
-        void RemoveLineFromScript(string pathScript, CodeTaskLine codeTaskLine)
-        {
-            string tempFile = Path.GetTempFileName();
-
-            int l_line = 0;
-            using (var sr = new StreamReader(pathScript))
-            using (var sw = new StreamWriter(tempFile))
-            {
-                string line = String.Empty;
-
-                while ((line = sr.ReadLine()) != null)
-                {
-                    l_line++;
-
-                    if (l_line != codeTaskLine.Line)
-                        sw.WriteLine(line);
-                }
-            }
-
-            todoIst.m_tasks.Remove(codeTaskLine);
-            File.Delete(pathScript);
-            File.Move(tempFile, pathScript);
-            AssetDatabase.Refresh();
-        }
-
+        
         public void Task_Header(CodeTaskLine task)
         {
             EditorGUILayout.LabelField(string.Format("{0}.{1}", task.ScriptName.Replace(
@@ -151,15 +114,6 @@ namespace Editor.TodoIst
 //            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
         }
         
-        public void DrawUILine(Color color, float thickness = 0.5f, int padding = 10)
-        {
-            Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding+thickness));
-            r.height = thickness;
-            r.y+=padding/2;
-            r.x-=2;
-            r.width +=6;
-            EditorGUI.DrawRect(r, color);
-        }
 
     }
     

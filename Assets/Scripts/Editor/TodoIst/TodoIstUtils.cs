@@ -8,6 +8,8 @@ namespace Editor.TodoIst
 {
     public static class TodoIstUtils
     {
+        public static List<string> ActiveTags = new List<string>();
+        
         public static void SortTasksByPriority(ref List<TaskLine> m_tasks)
         {
             for (int j = 0; j <= m_tasks.Count - 2; j++) {
@@ -69,6 +71,23 @@ namespace Editor.TodoIst
             }
 
             return Color.white;
+        }
+        
+        public static string DropDownSelector(string label, string selectedItem, string[] items , params GUILayoutOption[] layoutOptions)
+        {
+            if( selectedItem == null ) selectedItem = items[0];
+    
+            var oldIndex = Array.IndexOf( items, selectedItem );
+            if( oldIndex < 0 || oldIndex > items.Length )
+            {
+                oldIndex = 0;
+                selectedItem = items[0];
+            }
+    
+            var newIndex = EditorGUILayout.Popup( label, oldIndex, items, layoutOptions );
+            selectedItem = items[newIndex];
+    
+            return selectedItem;
         }
         
         //NOT USED

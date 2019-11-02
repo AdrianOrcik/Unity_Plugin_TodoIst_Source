@@ -109,7 +109,6 @@ namespace Editor.TodoIst
             return priorityTask;
         }
 
-
         List<string> TagHandler(ref string _text)
         {
             List<string> tags = new List<string>();
@@ -129,6 +128,14 @@ namespace Editor.TodoIst
                 else
                 {
                     tags.Add(tagString);
+                }
+            }
+
+            foreach (var tag in tags)
+            {
+                if (!TodoIstUtils.ActiveTags.Contains(tag))
+                {
+                    TodoIstUtils.ActiveTags.Add(tag);
                 }
             }
 

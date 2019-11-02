@@ -36,4 +36,9 @@ public class CodeTaskLine : TaskLine
     
     public List<string> Tags { get; set; }
 
+    public bool HasTags()
+    {
+        return Tags.Count > 0;
+    }
+
 }

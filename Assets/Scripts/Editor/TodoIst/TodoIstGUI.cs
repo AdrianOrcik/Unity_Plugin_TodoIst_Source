@@ -96,7 +96,7 @@ namespace Editor.TodoIst
         public void Task_Message(CodeTaskLine task)
         {
 
-            EditorGUILayout.LabelField("TODO:", EditorStyles.boldLabel, GUILayout.Width(45));
+            EditorGUILayout.LabelField(string.Format("{0}:",task.Hastag), EditorStyles.boldLabel, GUILayout.Width(45));
             EditorGUILayout.LabelField(string.Format("({0}) {1}" , task.Line, task.Message));
 
 

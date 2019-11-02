@@ -12,11 +12,11 @@ namespace Editor.TodoIst
         }
 
         private TodoIst todoIst;
-        private const string HASTAG_PREFIX = "TODO:";
-    
+        private string[] HASTAGS_PREFIX = new[] {"TODO", "FIX", "BUG"}; //TOOD: add to settings?
+        private const int WHITE_SPACE_POSTFIX = 2;
+        
         public void Search(ref List<TaskLine> m_tasks, ref List<string> m_scriptNames)
         {
-        
             m_tasks = new List<TaskLine>();
             m_scriptNames = new List<string>();
         
@@ -26,7 +26,9 @@ namespace Editor.TodoIst
             Dictionary<string,string> pathScript = new Dictionary<string, string>();
 
             HandleCorrectScripts(assetPaths, ref scripts, ref pathScript);
-            FindHastagInScripts(scripts, pathScript);
+            for(int i = 0; i < HASTAGS_PREFIX.Length; i++){
+                FindHastagInScripts(scripts, pathScript,HASTAGS_PREFIX[i]);
+            }
 
         }
     
@@ -46,7 +48,7 @@ namespace Editor.TodoIst
             }
         }
 
-        void FindHastagInScripts(List<MonoScript> _scripts, Dictionary<string,string> _pathScript )
+        void FindHastagInScripts(List<MonoScript> _scripts, Dictionary<string,string> _pathScript , string _hastag )
         {
             foreach (MonoScript script in _scripts)
             {
@@ -57,10 +59,10 @@ namespace Editor.TodoIst
             
                 while (scriptText != String.Empty)
                 {
-                    if (scriptText.Contains(HASTAG_PREFIX))
+                    if (scriptText.Contains(_hastag))
                     {
-                        int taskPriority = PriorityHandler(scriptText);
-                        int start = scriptText.IndexOf(HASTAG_PREFIX, StringComparison.Ordinal) + 5;
+                        int taskPriority = PriorityHandler(scriptText, _hastag);
+                        int start = scriptText.IndexOf(_hastag, StringComparison.Ordinal) + _hastag.Length + WHITE_SPACE_POSTFIX;
                         int end = scriptText.Substring(start).IndexOf("\n", StringComparison.Ordinal);
 
                         for (int i = 0; i < start + end + 1; i++)
@@ -74,7 +76,7 @@ namespace Editor.TodoIst
                         string todo = scriptText.Substring(start, end);
                         scriptText = scriptText.Substring(start + end + 1);
                         if(!todoIst.Get_scriptNames.Contains(script.name))todoIst.Get_scriptNames.Add(script.name);
-                        AddNewCodeTask(todoIst.Get_tasks,script,todo, script.name, lineCount, _pathScript[script.name], taskPriority);
+                        AddNewCodeTask(todoIst.Get_tasks,script,todo, script.name, lineCount, _pathScript[script.name], taskPriority, _hastag);
                     }
                     else
                     {
@@ -85,11 +87,11 @@ namespace Editor.TodoIst
             }
         }
 
-        int PriorityHandler(string scriptText)
+        int PriorityHandler(string _scriptText, string _hastag)
         {
             int priorityTask = 0;
             string prioritySubString =
-                scriptText.Substring(scriptText.IndexOf(HASTAG_PREFIX, StringComparison.Ordinal) - 3, 3);
+                _scriptText.Substring(_scriptText.IndexOf(_hastag, StringComparison.Ordinal) - (_hastag.Length - WHITE_SPACE_POSTFIX), 3);
             for (int i = 0; i < prioritySubString.Length; i++)
             {
                 if (prioritySubString[i] == '!') priorityTask++;
@@ -99,9 +101,16 @@ namespace Editor.TodoIst
         }
     
         //TODO: make generic
-        void AddNewCodeTask(List<TaskLine> m_tasks, MonoScript _script, string _todo, string _scriptName, int _line, string _scriptPath, int _taskPriority)
+        void AddNewCodeTask(List<TaskLine> m_tasks, MonoScript _script, string _todo, string _scriptName, int _line, string _scriptPath, int _taskPriority, string _hastag)
         {
-            CodeTaskLine codeTaskLine = new CodeTaskLine(_script,_todo,_scriptName, _line, _scriptPath, _taskPriority);
+            CodeTaskLine codeTaskLine = new CodeTaskLine(_script,_todo,_scriptName, _line, _scriptPath, _taskPriority,_hastag);
+
+            foreach (var task in m_tasks)
+            {
+                CodeTaskLine codeTask = (CodeTaskLine) task;
+                if (codeTask.HashKey.Equals(codeTaskLine.HashKey)) return;
+            }
+
             if(!m_tasks.Contains(codeTaskLine))
             { 
                 m_tasks.Add(codeTaskLine);

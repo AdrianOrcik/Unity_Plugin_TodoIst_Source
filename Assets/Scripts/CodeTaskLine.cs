@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CodeTaskLine : TaskLine
 {
-    public CodeTaskLine(MonoScript _script, string _message, string _scriptName, int _line, string _scriptPath, int _taskPriority)
+    public CodeTaskLine(MonoScript _script, string _message, string _scriptName, int _line, string _scriptPath, int _taskPriority, string _hastag)
     {
         Script = _script;
         Message = _message;
@@ -14,6 +14,9 @@ public class CodeTaskLine : TaskLine
         ScriptName = _scriptName;
         ScriptPath = _scriptPath;
         TaskPriority = _taskPriority;
+        Hastag = _hastag;
+
+        HashKey = _scriptName + _line + _message;
     }
     
     public string Message { get; set; }
@@ -25,5 +28,9 @@ public class CodeTaskLine : TaskLine
     public MonoScript Script { get; set; }
 
     public int TaskPriority { get; set; }
+    
+    public string Hastag { get; set; }
+    
+    public string HashKey { get; set; }
 
 }

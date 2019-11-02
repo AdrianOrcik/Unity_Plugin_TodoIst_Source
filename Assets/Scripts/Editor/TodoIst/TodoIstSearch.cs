@@ -59,7 +59,7 @@ namespace Editor.TodoIst
                     if (scriptText.Contains(_hastag))
                     {
                         int taskPriority = PriorityHandler(scriptText, _hastag);
-                        int start = scriptText.IndexOf(_hastag, StringComparison.Ordinal) + _hastag.Length + WHITE_SPACE_POSTFIX;
+                        int start = scriptText.IndexOf(_hastag, StringComparison.Ordinal) + _hastag.Length;
                         int end = scriptText.Substring(start).IndexOf("\n", StringComparison.Ordinal);
 
                         for (int i = 0; i < start + end + 1; i++)
@@ -70,7 +70,7 @@ namespace Editor.TodoIst
                             }
                         }
 
-                        string todo = scriptText.Substring(start, end);
+                        string todo = scriptText.Substring(start, end).Replace(":", "");
                         scriptText = scriptText.Substring(start + end + 1);
                         if(!todoIst.Get_scriptNames.Contains(script.name))todoIst.Get_scriptNames.Add(script.name);
                         AddNewCodeTask(todoIst.Get_tasks,script,todo, script.name, lineCount, _pathScript[script.name], taskPriority, _hastag);

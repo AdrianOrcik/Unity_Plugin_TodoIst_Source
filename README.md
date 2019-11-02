@@ -5,11 +5,10 @@ Unity todo editor extension
 :pencil: List of features 
 ---------
 * **General features**
-  * Sorting by priority
+  * Filter tasks by variable options
   * View tasks layouts
 * **Code-First Implementation**
   * Generating tasks from code
-  * Programmable tasks in code
   * Open a script exactly on task line
   * After task is done, remove todos from code
    

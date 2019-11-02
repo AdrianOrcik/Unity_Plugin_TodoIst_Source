@@ -94,6 +94,11 @@ namespace Editor.TodoIst
                     EditorGUILayout.BeginVertical("Box");
                     
                     EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField("");
+                    todoIst.GUI_Tag(groupTask.Tasks[taskID]);
+                    EditorGUILayout.EndHorizontal();
+                    
+                    EditorGUILayout.BeginHorizontal();
                     todoIst.GUI_TaskMessage(groupTask.Tasks[taskID]);
                     todoIst.GUI_Button_Done(groupTask.Tasks[taskID]);
                     todoIst.GUI_Button_Script(groupTask.Tasks[taskID]);
@@ -118,6 +123,7 @@ namespace Editor.TodoIst
                 
             EditorGUILayout.BeginHorizontal();
             todoIst.GUI_TaskHeader(codeTaskLine);
+            todoIst.GUI_Tag(codeTaskLine);
             todoIst.GUI_Button_Done(codeTaskLine);
             todoIst.GUI_Button_Script(codeTaskLine);
             EditorGUILayout.EndHorizontal();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 
 namespace Editor.TodoIst
@@ -72,8 +73,11 @@ namespace Editor.TodoIst
 
                         string todo = scriptText.Substring(start, end).Replace(":", "");
                         scriptText = scriptText.Substring(start + end + 1);
+                        
+                        List<string> tags = TagHandler(ref todo);
+                        
                         if(!todoIst.Get_scriptNames.Contains(script.name))todoIst.Get_scriptNames.Add(script.name);
-                        AddNewCodeTask(todoIst.Get_tasks,script,todo, script.name, lineCount, _pathScript[script.name], taskPriority, _hastag);
+                        AddNewCodeTask(todoIst.Get_tasks,script,todo, script.name, lineCount, _pathScript[script.name], taskPriority, _hastag, tags);
                     }
                     else
                     { 
@@ -96,11 +100,37 @@ namespace Editor.TodoIst
 
             return priorityTask;
         }
-    
-        //TODO: make generic
-        void AddNewCodeTask(List<TaskLine> m_tasks, MonoScript _script, string _todo, string _scriptName, int _line, string _scriptPath, int _taskPriority, string _hastag)
+
+
+        List<string> TagHandler(ref string _text)
         {
-            CodeTaskLine codeTaskLine = new CodeTaskLine(_script,_todo,_scriptName, _line, _scriptPath, _taskPriority,_hastag);
+            List<string> tags = new List<string>();
+            int startTag = _text.IndexOf("<", StringComparison.Ordinal);
+            int endTag = _text.IndexOf(">", StringComparison.Ordinal);
+
+            if(startTag != -1){
+                string tagString = _text.Substring(startTag, endTag+1);
+                _text = _text.Remove(startTag, (endTag - startTag)+1);
+                tagString = tagString.Remove(0,1);
+                tagString = tagString.Remove(tagString.Length -1,1);
+                        
+                if (tagString.Contains(","))
+                {
+                    tags = tagString.Split(',').ToList();
+                }
+                else
+                {
+                    tags.Add(tagString);
+                }
+            }
+
+            return tags;
+        }
+        
+        //TODO: make generic
+        void AddNewCodeTask(List<TaskLine> m_tasks, MonoScript _script, string _todo, string _scriptName, int _line, string _scriptPath, int _taskPriority, string _hastag , List<string> _tags)
+        {
+            CodeTaskLine codeTaskLine = new CodeTaskLine(_script,_todo,_scriptName, _line, _scriptPath, _taskPriority,_hastag, _tags);
 
             foreach (var task in m_tasks)
             {

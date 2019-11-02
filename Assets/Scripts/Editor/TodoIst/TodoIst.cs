@@ -62,6 +62,11 @@ namespace Editor.TodoIst
             todoIstGUI.Task_ScriptButton(task);
         }
 
+        public void GUI_Tag(CodeTaskLine task)
+        {
+            todoIstGUI.Task_Tag(task);
+        }
+
         public void GUI_SetPriorityColor(int taskPriority = -1)
         {
             if(taskPriority == -1) GUI.backgroundColor = Color.white;
@@ -77,9 +82,5 @@ namespace Editor.TodoIst
         {
             TodoIstUtils.SortTasksByPriority(ref m_tasks);
         }
-        
-
-
-
     }
 }

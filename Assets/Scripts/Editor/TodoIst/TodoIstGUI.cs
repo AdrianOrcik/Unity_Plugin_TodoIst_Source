@@ -81,6 +81,15 @@ namespace Editor.TodoIst
             GUI.backgroundColor = TodoIstUtils.GetPriorityColor(task.TaskPriority);
         }
         
+        public void Task_Tag(CodeTaskLine task)
+        {
+            for(int i = 0; i< task.Tags.Count;i++){
+                GUI.backgroundColor = Color.white;
+                if (GUILayout.Button(task.Tags[i], "MiniButton", GUILayout.Width(10 * task.Tags[i].Length ))) { }
+                GUI.backgroundColor = TodoIstUtils.GetPriorityColor(task.TaskPriority);
+            }
+        }
+        
         public void Task_Header(CodeTaskLine task)
         {
             EditorGUILayout.LabelField(string.Format("{0}.{1}", task.ScriptName.Replace(

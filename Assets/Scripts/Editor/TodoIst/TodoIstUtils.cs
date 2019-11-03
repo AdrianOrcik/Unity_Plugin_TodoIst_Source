@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Editor.TodoIst.DataStructure;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Editor.TodoIst
 {
     public static class TodoIstUtils
     {
+        public static string[] ActiveHastags = new[] {"TODO", "FIX", "BUG"};
         public static List<string> ActiveTags = new List<string>();
         
         public static void SortTasksByPriority(ref List<TaskLine> m_tasks)
@@ -90,7 +92,6 @@ namespace Editor.TodoIst
             return selectedItem;
         }
         
-        //NOT USED
         public static List<CodeTaskLine> SimpleTaskSort(List<CodeTaskLine> tasks)
         {
             for (int j = 0; j <= tasks.Count - 2; j++) {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Editor.TodoIst.DataStructure;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,10 +15,10 @@ namespace Editor.TodoIst
 
         private string m_selectedTag;
         private string m_selectedHash;
-        private string[] m_hastagPrefix = new[] {"TODO", "FIX", "BUG"}; //TOOD: add to settings?
-        
+
         private enum SortFilterType{None,Priority,Tag,Hastag}
         private enum GuiType{Simple,Group}
+        
         private GuiType m_guiMode = GuiType.Group;
         private SortFilterType m_filterType = SortFilterType.None;
         
@@ -40,7 +41,7 @@ namespace Editor.TodoIst
 
             if (m_filterType == SortFilterType.Hastag)
             {
-                todoIst.SearchByHastag(m_hastagPrefix.ToList().IndexOf(m_selectedHash));
+                todoIst.SearchByHastag(TodoIstUtils.ActiveHastags.ToList().IndexOf(m_selectedHash));
             }
             else todoIst.Search();
             
@@ -208,22 +209,12 @@ namespace Editor.TodoIst
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             m_filterType = (SortFilterType)EditorGUILayout.EnumPopup("Sorting by: ",m_filterType);
-//            EditorGUILayout.LabelField("Tasks by priority:",GUILayout.Width(145));
-//            m_prioritySorting = EditorGUILayout.Toggle(m_prioritySorting, GUILayout.Width(25));
-//            EditorGUILayout.EndHorizontal();
-//            EditorGUILayout.BeginHorizontal();
-//            EditorGUILayout.LabelField("Tasks by tags:",GUILayout.Width(145));
-//            m_tagSorting = EditorGUILayout.Toggle(m_tagSorting, GUILayout.Width(25));
-//            EditorGUILayout.EndHorizontal();
-//            EditorGUILayout.BeginHorizontal();
-//            EditorGUILayout.LabelField("Tasks by hastag:",GUILayout.Width(145));
-//            m_hastagSorting = EditorGUILayout.Toggle(m_hastagSorting, GUILayout.Width(25));
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             EditorGUI.indentLevel++;
             if (m_filterType == SortFilterType.Hastag)
             {
-                m_selectedHash = TodoIstUtils.DropDownSelector("Select Hash: ", m_selectedHash, m_hastagPrefix);
+                m_selectedHash = TodoIstUtils.DropDownSelector("Select Hash: ", m_selectedHash, TodoIstUtils.ActiveHastags);
             }
 
             if (m_filterType == SortFilterType.Tag)

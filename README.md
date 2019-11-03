@@ -1,4 +1,4 @@
-:rocket: TodoIst
+:rocket: TodoIst (v1.0)
 ---------
 (Unity open source plugin)
 

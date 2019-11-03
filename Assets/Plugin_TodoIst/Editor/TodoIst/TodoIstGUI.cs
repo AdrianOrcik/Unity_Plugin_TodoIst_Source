@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Editor.TodoIst;
 using Editor.TodoIst.DataStructure;
+using Plugin_TodoIst.Editor.TodoIst;
 using UnityEditor;
 using UnityEditor.VersionControl;
 using UnityEngine;
@@ -27,23 +28,22 @@ namespace Editor.TodoIst
         }
 
         private TodoIst todoIst;
+        private TodoIstConfig todoIstConfig;
 
         private TextureIcons m_icons;
         private const float ICON_SIZE = 20f;
 
         public void Init()
         {
+            todoIstConfig = ScriptableObject.CreateInstance<TodoIstConfig>();
             InitTextures();
+
         }
 
         void InitTextures()
         {
-            m_icons.m_iconDone = Resources.Load<Texture2D>("TodoIstIcons/icon_done");
-            m_icons.m_iconScript = Resources.Load<Texture2D>("TodoIstIcons/icon_script");
-            m_icons.m_iconFlags = new Texture2D[3];
-            m_icons.m_iconFlags[0] = Resources.Load<Texture2D>("TodoIstIcons/icon_value_1");
-            m_icons.m_iconFlags[1] = Resources.Load<Texture2D>("TodoIstIcons/icon_value_2");
-            m_icons.m_iconFlags[2] = Resources.Load<Texture2D>("TodoIstIcons/icon_value_3");
+            m_icons.m_iconDone = todoIstConfig.Icon_Done;
+            m_icons.m_iconScript = todoIstConfig.Icon_Script;
         }
 
         public GUIContent GetPriorityFlag(int priority)
@@ -110,23 +110,8 @@ namespace Editor.TodoIst
         }
         public void Task_Message(CodeTaskLine task)
         {
-
             EditorGUILayout.LabelField(string.Format("{0}:",task.Hastag), EditorStyles.boldLabel, GUILayout.Width(45));
             EditorGUILayout.LabelField(string.Format("({0}) {1}" , task.Line, task.Message));
-
-
-            //TODO: use or remove flag icon
-//            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
-//            if (task.TaskPriority > 0)
-//            {
-//                GUI.backgroundColor = Color.white;
-//                if (GUILayout.Button(GetPriorityFlag(task.TaskPriority - 1), GUILayout.Width(ICON_SIZE),
-//                    GUILayout.Height(ICON_SIZE)))
-//                {
-//                    Debug.Log("This task has priority, keep working hard!");
-//                }
-//            }
-//            GUI.backgroundColor = GetPriorityColor(task.TaskPriority);
         }
         
 

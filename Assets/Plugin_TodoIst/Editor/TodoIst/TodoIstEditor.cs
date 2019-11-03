@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Editor.TodoIst.DataStructure;
+using Plugin_TodoIst.Editor.TodoIst;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ using UnityEngine;
 //-----------------------------------
 //Developed by Adrian Orcik
 //If you have issues let me know adrian.orcik@gmail.com or use issue option on git
-//https://github.com/AdrianOrcik/Unity_Plugin_TodoIst_Source
+//https://github.com/AdrianOrcik/Unity_Plugin_TodoIst
 //----------------------------------
 
 namespace Editor.TodoIst
@@ -16,7 +17,7 @@ namespace Editor.TodoIst
     public class TodoIstEditor : EditorWindow
     {
         private TodoIst todoIst;
-    
+        
         private Vector2 m_scrollPosition;
         private bool m_settings;
 

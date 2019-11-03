@@ -58,9 +58,9 @@ Space for your tasks in unity
 :package: Installing
 ---------
 * Download package and import to Unity
+* [Download Here](https://github.com/AdrianOrcik/Unity_Plugin_TodoIst)
 * Package Folder Dependency
-  * ../Assets/Scripts/Editor/TodoIst
-  * ../Assets/Resources/TodoIstIcons
+  * ../Assets/Plugin_TodoIst/Editor/TodoIst
   
 :card_file_box: Feature request
  ---------
